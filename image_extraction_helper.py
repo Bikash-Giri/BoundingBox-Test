@@ -98,9 +98,8 @@ def draw_bounding_box(image_path, coordinates,
 
 # Example usage
 if __name__ == "__main__":
-    # Example 1: Single bounding box
     image_path = "mouse_pic.png"
-    
+    # This is just a example file don't run this file
     # Coordinates format: (x1, y1, x2, y2)
     # (x1, y1) = top-left corner
     # (x2, y2) = bottom-right corner
