@@ -8,29 +8,29 @@ import pandas as pd
 
 from image_extraction_helper import draw_bounding_box
 
-folder_path = "/Users/bikashgiri/Downloads/annotations_for_students/miceid_20251003144839"
+FOLDER_PATH = " Add your path here"
 
 
 
 def extract_row_information(row):
     
     """
-    Loop through all files in a folder.
+        Extract row information
     
     Parameters:
-    - folder_path: Path to the folder containing files
+    - row: row of current loop 
     """
 
-    labelledFilePath = Path(folder_path)/"labels"
+    label = Path(FOLDER_PATH)/"labels"
 
     
     # Check if folder exists
-    if not os.path.exists(labelledFilePath):
-        print(f"Folder '{labelledFilePath}' does not exist!")
+    if not os.path.exists(label):
+        print(f"Folder '{label}' does not exist!")
         return
     
     # Get all files in the folder
-    files = os.listdir(labelledFilePath)
+    files = os.listdir(label)
     
     for filename in files:
          
@@ -45,7 +45,7 @@ def extract_row_information(row):
             imageName = Path(row.image_id).name 
 
             if imageName.endswith(filename):
-                image_path = Path(labelledFilePath)/ filename 
+                image_path = Path(label)/ filename 
                 splittedTailInfo = row.tailmark_info.split()
             
                 if  "Empty DataFrame" in splittedTailInfo:
@@ -77,7 +77,7 @@ def extract_row_information(row):
 
 def iterate_over_CSV():
 
-    csvPath = Path(folder_path) / "train.csv"
+    csvPath = Path(FOLDER_PATH) / "train.csv"
     df = pd.read_csv(csvPath)
     df = df.reset_index(drop=True)
 
