@@ -4,7 +4,7 @@ from PIL import Image
 from pathlib import Path
 
 def draw_bounding_box(image_path, coordinates, 
-                      color=(0, 255, 0), thickness=2, label=None):
+                      color=(0, 255, 0), thickness=2, label=None,class_label = "0"):
     """
     Draw bounding box on an image.
     
@@ -98,9 +98,8 @@ def draw_bounding_box(image_path, coordinates,
 
 # Example usage
 if __name__ == "__main__":
-    # Example 1: Single bounding box
     image_path = "mouse_pic.png"
-    
+    # This is just a example file don't run this file
     # Coordinates format: (x1, y1, x2, y2)
     # (x1, y1) = top-left corner
     # (x2, y2) = bottom-right corner
@@ -111,7 +110,8 @@ if __name__ == "__main__":
         coordinates=bbox_coordinates,
         color=(0, 255, 0),  # Green in BGR
         thickness=3,
-        label="Tail-Patches"
+        label="Tail-Patches",
+        class_label= "0"
     )
 
 
