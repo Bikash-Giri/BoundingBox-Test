@@ -3,6 +3,8 @@ import numpy as np
 from PIL import Image
 from pathlib import Path
 
+filename = "outputs/train.csv"
+
 def draw_bounding_box(image_path, coordinates, 
                       color=(0, 255, 0), thickness=2, label=None,class_label = "0"):
     """
@@ -92,6 +94,10 @@ def draw_bounding_box(image_path, coordinates,
 
 
     print(f"Image saved to {full_output_path}")
+
+    with open(filename, 'a', newline='') as file:
+        row = f"{full_output_path},{full_output_patch_path},{class_label}\n"
+        file.write(row)
     
     return img
 
