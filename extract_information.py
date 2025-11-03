@@ -6,14 +6,18 @@ from re import split
 
 from numpy.ma import count
 import pandas as pd
+import classification_model as model
 
 from image_extraction_helper import draw_bounding_box
 
 FOLDER_PATH = "/Users/bikashgiri/Downloads/annotations_for_students/miceid_20251003144839"
-csv_file = "output.csv"
+
+train_csv = "outputs/train.csv"
 csv_file = []
 
+
 def extract_label_from_textfile(file):
+    
      with open(file, "r") as f:
         text = f.read().split()
         #convert text to float since we have number in text file
@@ -51,10 +55,12 @@ def extract_row_information(row):
     print(imageName)
 
 
-
+    # get last path of a file wihout extension
     path_without_extension = Path(imageName).stem
     path_suffix = Path(path_without_extension).name
     print(path_suffix + "suffix_name")
+
+    #Add .txt and .png extension to our filename as our row path contains .png with different foloder structure
     file_with_txt = path_without_extension + ".txt"
     file_with_image = path_without_extension + ".png"
     textfile = Path(label) / file_with_txt
@@ -83,6 +89,7 @@ def extract_row_information(row):
                         if len(slicedTailCoordinate) >= 4:
                             coordinate = list(map(float,slicedTailCoordinate))
                             print(f"Coordinates: {coordinate}")
+                            
                             draw_bounding_box(
                                 image_path= image_path,
                                 coordinates = coordinate,
@@ -91,6 +98,7 @@ def extract_row_information(row):
                                 label="Tail-Patches",
                                 class_label= patch_label
                             )
+                            
                         else:
                             print(f"Not enough coordinate data: {slicedTailCoordinate}")
                     except (ValueError, IndexError) as e:
@@ -147,6 +155,28 @@ def extract_row_information(row):
     #     else:
     #         print(f"  → Other file type: {file_ext}")
 
+def create_new_CSV():
+    import csv
+    # Create folder if it doesn't exist
+    os.makedirs('outputs', exist_ok=True)
+
+    # File path inside outputs folder
+
+    # Define the header
+    header = ['BoundingBox', 'Patch', 'PatchLabel']
+    
+
+    # Create CSV file and write header
+    with open(train_csv, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(header)
+
+
+    with open(train_csv, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(header)
+        
+
 def iterate_over_CSV():
 
     csvPath = Path(FOLDER_PATH) / "train.csv"
@@ -154,13 +184,17 @@ def iterate_over_CSV():
     df = df.reset_index(drop=True)
 
     for row in df.itertuples():
-        extract_row_information(row)
+     extract_row_information(row)
+
     
 
 
 
-def main():    
+def main(): 
+    create_new_CSV()   
     iterate_over_CSV()
+
+
      # Add your code here
 
 # Using the special variable 
